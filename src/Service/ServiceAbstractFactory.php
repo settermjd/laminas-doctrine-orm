@@ -3,10 +3,10 @@ declare(strict_types=1);
 
 namespace Skar\LaminasDoctrineORM\Service;
 
-use Interop\Container\ContainerInterface;
 use Laminas\ServiceManager\Exception\ServiceNotCreatedException;
 use Laminas\ServiceManager\Exception\ServiceNotFoundException;
 use Laminas\ServiceManager\Factory\AbstractFactoryInterface;
+use Psr\Container\ContainerInterface;
 
 class ServiceAbstractFactory implements AbstractFactoryInterface {
 	/**

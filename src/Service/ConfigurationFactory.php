@@ -11,13 +11,13 @@ use Doctrine\ORM\Cache\DefaultCacheFactory;
 use Doctrine\ORM\Cache\RegionsConfiguration;
 use Doctrine\ORM\Exception\InvalidEntityRepository;
 use Doctrine\ORM\Mapping\EntityListenerResolver;
-use Interop\Container\ContainerInterface;
-use Psr\Container;
 use InvalidArgumentException;
+use Psr\Container\ContainerExceptionInterface;
+use Psr\Container\ContainerInterface;
+use Psr\Container\NotFoundExceptionInterface;
 
 class ConfigurationFactory extends AbstractFactory {
 	/**
-	 * @param Container\ContainerInterface $container
 	 * @param string $requestedName
 	 * @param array|null $options
 	 *
@@ -25,10 +25,14 @@ class ConfigurationFactory extends AbstractFactory {
 	 *
 	 * @throws DBAL\Exception
 	 * @throws InvalidEntityRepository
-	 * @throws Container\ContainerExceptionInterface
-	 * @throws Container\NotFoundExceptionInterface
+     * @throws ContainerExceptionInterface
+     * @throws NotFoundExceptionInterface
 	 */
-	public function __invoke(ContainerInterface $container, $requestedName, ?array $options = null): Configuration {
+    public function __invoke(
+        ContainerInterface $container,
+        string $requestedName,
+        ?array $options = null
+    ): Configuration {
 		$configuration = new Configuration();
 
 		$configuration->setAutoGenerateProxyClasses($this->config['auto_generate_proxy_classes']);

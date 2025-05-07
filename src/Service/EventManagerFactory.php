@@ -3,9 +3,9 @@ declare(strict_types=1);
 
 namespace Skar\LaminasDoctrineORM\Service;
 
-use Interop\Container\ContainerInterface;
 use Doctrine\Common\EventManager;
 use InvalidArgumentException;
+use Psr\Container\ContainerInterface;
 
 class EventManagerFactory extends AbstractFactory {
 	/**

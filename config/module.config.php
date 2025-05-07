@@ -3,9 +3,9 @@ declare(strict_types=1);
 
 use Doctrine\ORM;
 use Doctrine\Migrations\Tools\Console\Command as DoctrineCommand;
-use Interop\Container\ContainerInterface;
 use Skar\LaminasDoctrineORM\Service;
 use Skar\LaminasDoctrineORM\Command;
+use Psr\Container\ContainerInterface;
 use Skar\Cache;
 
 return [

@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace Skar\LaminasDoctrineORM\Service;
 
-use Interop\Container\ContainerInterface;
 use Doctrine\ORM\Mapping\Driver\AttributeDriver;
 use Doctrine\Persistence\Mapping\Driver\FileDriver;
 use Doctrine\Persistence\Mapping\Driver\MappingDriverChain;
@@ -15,6 +14,7 @@ use Doctrine\Common\Annotations\IndexedReader;
 use Doctrine\Common\Annotations\AnnotationReader;
 use Laminas\Stdlib\ArrayUtils;
 use \InvalidArgumentException;
+use Psr\Container\ContainerInterface;
 
 class DriverFactory extends AbstractFactory {
 	/**
