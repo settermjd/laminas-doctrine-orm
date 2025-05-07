@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Skar\LaminasDoctrineORM\Service;
@@ -6,38 +7,31 @@ namespace Skar\LaminasDoctrineORM\Service;
 use Laminas\ServiceManager\Factory\FactoryInterface;
 use Laminas\Stdlib\ArrayUtils;
 
-abstract class AbstractFactory implements FactoryInterface {
-	protected array $config;
+use function sprintf;
 
-	/**
-	 * AbstractFactory constructor.
-	 *
-	 * @param array $config
-	 */
-	public function __construct(array $config = []) {
-		$this->config = ArrayUtils::merge($this->getDefaultConfig(), $config);
-	}
+abstract class AbstractFactory implements FactoryInterface
+{
+    protected array $config;
 
-	/**
-	 * Returns service full name
-	 *
-	 * @param string $type
-	 * @param string|null $key
-	 *
-	 * @return string
-	 */
-	protected function getServiceName(string $type, ?string $key = null): string {
-		return sprintf(
-			'doctrine.%s.%s',
-			$type,
-			($key === null) ? $this->config[$type] : $key
-		);
-	}
+    public function __construct(array $config = [])
+    {
+        $this->config = ArrayUtils::merge($this->getDefaultConfig(), $config);
+    }
 
-	/**
-	 * Returns default config
-	 *
-	 * @return array
-	 */
-	abstract protected function getDefaultConfig(): array;
+    /**
+     * Returns service full name
+     */
+    protected function getServiceName(string $type, ?string $key = null): string
+    {
+        return sprintf(
+            'doctrine.%s.%s',
+            $type,
+            $key ?? $this->config[$type]
+        );
+    }
+
+    /**
+     * Returns default config
+     */
+    abstract protected function getDefaultConfig(): array;
 }

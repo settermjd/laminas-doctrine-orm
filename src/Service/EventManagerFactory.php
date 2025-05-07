@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Skar\LaminasDoctrineORM\Service;
@@ -7,39 +8,42 @@ use Doctrine\Common\EventManager;
 use InvalidArgumentException;
 use Psr\Container\ContainerInterface;
 
-class EventManagerFactory extends AbstractFactory {
-	/**
-	 * @inheritDoc
-	 *
-	 * @return EventManager
-	 */
-	public function __invoke(ContainerInterface $container, $requestedName, ?array $options = null): EventManager {
-		$eventManager = new EventManager();
+use function sprintf;
 
-		foreach ($this->config['subscribers'] as $subscriber) {
-			if (!$container->has($subscriber)) {
-				throw new InvalidArgumentException(sprintf('Subscriber "%s" not found', $subscriber));
-			}
-			$eventManager->addEventSubscriber($container->get($subscriber));
-		}
+class EventManagerFactory extends AbstractFactory
+{
+    /**
+     * @inheritDoc
+     */
+    public function __invoke(ContainerInterface $container, string $requestedName, ?array $options = null): EventManager
+    {
+        $eventManager = new EventManager();
 
-		foreach ($this->config['listeners'] as $listener) {
-			if (!$container->has($listener['listener'])) {
-				throw new InvalidArgumentException(sprintf('Listeners "%s" not found', $listener));
-			}
-			$eventManager->addEventListener($listener['events'], $container->get($listener['listener']));
-		}
+        foreach ($this->config['subscribers'] as $subscriber) {
+            if (! $container->has($subscriber)) {
+                throw new InvalidArgumentException(sprintf('Subscriber "%s" not found', $subscriber));
+            }
+            $eventManager->addEventSubscriber($container->get($subscriber));
+        }
 
-		return $eventManager;
-	}
+        foreach ($this->config['listeners'] as $listener) {
+            if (! $container->has($listener['listener'])) {
+                throw new InvalidArgumentException(sprintf('Listeners "%s" not found', $listener));
+            }
+            $eventManager->addEventListener($listener['events'], $container->get($listener['listener']));
+        }
 
-	/**
-	 * @inheritDoc
-	 */
-	protected function getDefaultConfig(): array {
-		return [
-			'subscribers' => [],
-			'listeners'   => [],
-		];
-	}
+        return $eventManager;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    protected function getDefaultConfig(): array
+    {
+        return [
+            'subscribers' => [],
+            'listeners'   => [],
+        ];
+    }
 }
